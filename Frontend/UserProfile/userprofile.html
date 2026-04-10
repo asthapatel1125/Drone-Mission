@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drone User Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="userprofile.css" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar-container">
+        <a class="nav-button" href="../DroneScreen/drone_screen.html"><img src="../images/Drone.png" alt="Drone" width="35px" height="35px"><p>Drone Screen</p></a><!--might need to remove target=blank-->
+    </nav>
+    <div class="profile-container">
+        <div class="profile-circle">
+            <label for="image-upload" class="custom-file-upload fa-solid fa-user">
+                <p class="upload-text">Upload your image</p>
+            </label>
+            <input id="image-upload" type="file" style="display:none;" onchange="imageSelected(event)" />
+        </div>
+        
+        <div class="profile-info">
+            <label for="name">John Doe</label>
+
+            <label for="username">Username:</label>
+            <input type="text" id="username" value="example" disabled>
+
+            <label for="password">Password:</label>
+            <div class="password-container">
+                <input type="password" id="password" value="password" disabled>
+                <div class="show-password-container">
+                    <input type="checkbox" id="show-password">
+                    <label for="show-password">Show Password</label>
+                </div>
+            </div>            
+            <label for="email">Email:</label>
+            <input type="email" id="email" value="john.doe@example.com" disabled>
+
+            <label for="joined">Date Joined:</label>
+            <input type="date" id="joined" value="2023-11-25" disabled>
+
+
+            <div class="password-change">
+            <label for="Change Password">Change Your Password:</label>
+
+            <label for="old-password" class="visually-hidden">Old Password:</label>
+            <input type="password" id="old-password" placeholder="Old Password" required>
+
+        
+            <label for="new-password" class="visually-hidden">New Password:</label>
+            <input type="password" id="new-password" placeholder="New Password" required>
+
+            <label for="confirm-password" class="visually-hidden">Confirm Password:</label>
+            <input type="password" id="confirm-password" placeholder="Confirm Password" required>
+
+                <button type="button" onclick="changePassword()">Change Password</button>
+            </div>
+            
+            <div class="logout-btn"><a href="../mainscreen/mainscreen.html"style=>Log Out</a></div>
+        </div>
+    </div>
+    <script>
+        function imageSelected(event) {
+                var file = event.target.files[0];
+                var reader = new FileReader();
+                    reader.onload = function(e) {
+                var profileCircle = document.querySelector('.profile-circle');
+                // Set the uploaded image as the background
+                profileCircle.style.backgroundImage = 'url(' + e.target.result + ')';
+                profileCircle.style.backgroundSize = 'cover'; // Ensure the image covers the circle
+                profileCircle.style.backgroundPosition = 'center'; // Center the image
+
+        // Hide the icon and text
+                var icon = profileCircle.querySelector('.fa-user');
+                var uploadText = profileCircle.querySelector('.upload-text');
+                if (icon) {
+                    icon.style.display = 'none';
+                }
+                if (uploadText) {
+                     uploadText.style.display = 'none';
+                 }
+             };
+            reader.readAsDataURL(file);
+}
+
+        window.onload = function() {
+            document.getElementById('show-password').addEventListener('change', function() {
+                var passwordInput = document.getElementById('password');
+                if (this.checked) {
+                    passwordInput.type = 'text';
+                } else {
+                    passwordInput.type = 'password';
+                }
+            });
+        };
+
+        function changePassword() {
+        var oldPassword = document.getElementById('old-password').value;
+        var newPassword = document.getElementById('new-password').value;
+        var confirmPassword = document.getElementById('confirm-password').value;
+
+        // Check to see if new passwords match
+        if (newPassword === confirmPassword) {
+    
+            alert('Password successfully changed.');
+        } else {
+            alert('The new passwords do not match. Please try again.');
+        }
+    }
+
+        
+    </script>
+</body>
+
+</html>

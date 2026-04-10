@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drone Application</title>
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="mainscreen.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+</head>
+
+<body>
+    <header>
+        <h1>Welcome to Drone Control</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="#" id="about-tab"><i class="fas fa-info-circle"></i> About</a></li>
+            <li><a href="#" id="features-tab"><i class="fas fa-cogs"></i> Features</a></li>
+            <li><a href="../UserAccount/user.html" id="menu-tab"><i class="fas fa-cog"></i> User Account</a></li>
+            <label class="switch">
+                <input type="checkbox" id="themeToggle">
+                <span class="slider round"></span>
+            </label>
+        </ul>
+    </nav>
+    <section class="main-content">
+        <div class="content" id="about-content">
+            <h2>About Our Drone Application</h2>
+
+            <p>Introducing our drone application: the gadget that turns your smartphone into the ultimate remote control
+                for the most sophisticated and fun aerial adventure you've ever experienced! Imagine being the commander
+                of your very own flying robot, soaring through the skies with the effortless grace of a seagull, only
+                without the awkward squawking. With our app, you're in charge of the skies, and you don't even need a
+                pilot's license – just a sense of adventure and a desire to explore your world from above. Picture this:
+                you're sitting in your backyard, sipping a cool lemonade, and from the palm of your hand, you launch
+                your trusty drone companion into the wide blue yonder. It zips through the air like a stealthy
+                superhero, taking in breathtaking vistas, capturing stunning snapshots, and making you feel like the
+                king or queen of the sky. But that's not all! The app's got more tricks up its sleeve than a magician's
+                hat. Whether you want to show off your flying skills, spy on your neighbors (just kidding, please
+                don't), or simply embrace your inner tech guru, our drone application has you covered. From wireless
+                wizardry to flight statistics that make you feel like an ace pilot, we've got all the features to keep
+                you entertained. Get ready to take your imagination to new heights – welcome to the drone revolution,
+                where the sky's the limit, and the fun never ends!</p>
+        </div>
+        <div class="content" id="features-content" style="display: none;">
+            <h2>Key Features</h2>
+            <div class="features">
+                <div class="feature" id="customizable-control">
+                                   <i class="fas fa-gamepad"></i>
+                                   <h3>Customizable Control Setup</h3>
+                                   <p>Control the drone with a customizable control setup tailored to your preferences.</p>
+                                   <p>Additional Features:
+                                       <ul>
+                                           <li>Intuitive Control Interface</li>
+                                           <li>Personalized Control Mapping</li>
+                                           <li>Real-time Feedback</li>
+                                       </ul>
+                                   </p>
+                               </div>
+                               <div class="feature" id="simulation-software">
+                                   <i class="fas fa-desktop"></i>
+                                   <h3>Simulation Software</h3>
+                                   <p>Model the drone's behavior with advanced simulation software before taking it to the skies.</p>
+                                   <p>Additional Features:
+                                       <ul>
+                                           <li>Realistic Flight Dynamics</li>
+                                           <li>Environment Interaction</li>
+                                           <li>Scenario Testing</li>
+                                       </ul>
+                                   </p>
+                               </div>
+                               <div class="feature" id="firmware-installation">
+                                   <i class="fas fa-microchip"></i>
+                                   <h3>Firmware Installation</h3>
+                                   <p>Install specialized firmware on the drone for enhanced performance and functionality.</p>
+                                   <p>Additional Features:
+                                       <ul>
+                                    <li>Optimized Flight Algorithms</li>
+                               <li>Remote Software Updates</li>
+                           <li>Compatibility with Third-Party Modules</li>
+                       </ul>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <p>&copy; 2023 Drone Control</p>
+    </footer>
+
+    <script>
+        const aboutTab = document.getElementById('about-tab');
+        const featuresTab = document.getElementById('features-tab');
+        const menuTab = document.getElementById('menu-tab');
+        const aboutContent = document.getElementById('about-content');
+        const featuresContent = document.getElementById('features-content');
+
+        aboutTab.addEventListener('click', () => {
+            aboutContent.style.display = 'block';
+            featuresContent.style.display = 'none';
+        });
+
+        featuresTab.addEventListener('click', () => {
+            aboutContent.style.display = 'none';
+            featuresContent.style.display = 'block';
+        });
+
+        const features = document.querySelectorAll('.feature');
+
+        features.forEach(feature => {
+            feature.addEventListener('click', () => {
+                feature.style.backgroundColor = 'lightblue'; // Change the background color
+                //can add more details or actions when a feature is clicked.
+            });
+        });
+        //can add more logic to handle the "Menu" tab's functionality.
+
+        const themeToggle = document.getElementById('themeToggle');
+        themeToggle.addEventListener('change', () => {
+            document.body.classList.toggle('dark-theme');
+        });
+
+    </script>
+</body>
+
+</html>

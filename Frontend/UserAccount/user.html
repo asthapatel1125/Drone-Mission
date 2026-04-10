@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drone Application - Sign Up/Login</title>
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="user.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+</head>
+
+<body>
+    <header>
+        <h1>Welcome to Drone Control</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="#" id="signup-tab"><i class="fas fa-user-plus"></i> Sign Up</a></li>
+            <li><a href="#" id="login-tab"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+            <label class="switch">
+                <input type="checkbox" id="themeToggle">
+                <span class="slider round"></span>
+            </label>
+        </ul>
+    </nav>
+    <section class="main-content">
+        <div class="content" id="signup-content">
+            <h2>Sign Up</h2>
+            <form id="signup-form">
+                <input type="text" required="required" id="first-name" placeholder="First Name">
+                <input type="text" required="required" id="last-name" placeholder="Last Name">
+                <input type="email" required="required" id="email" placeholder="Email">
+                <input type="text" required="required" id="create-username" placeholder="Create Username">
+                <input type="password" required="required" id="create-password" placeholder="Create Password">
+                <input type="password" required="required" id="reenter-password" placeholder="Re-enter Password">
+                <p id="password-error" style="color: var(--warning); display: none;">Passwords do not match</p>
+                <button type="submit">Sign Up</button>
+            </form>
+            <p>Already have an account? <a href="#" id="login-link">Login</a></p>
+        </div>
+        <div class="content" id="login-content" style="display: none;">
+            <h2>Login</h2>
+            <form id="login-form">
+                <input type="text" required="required" id="login-username" placeholder="Username">
+                <p id="username-error-login" style="color: var(--warning); display: none;">Incorrect Username</p>
+                <input type="password" required="required" id="login-password" placeholder="Password">
+                <p id="password-error-login" style="color: var(--warning); display: none;">Incorrect Password</p>
+                <button type="submit">Login</button>
+            </form>
+            <p>Don't have an account? <a href="#" id="signup-link">Sign Up</a></p>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2023 Drone Control</p>
+    </footer>
+
+    <script>
+        const signupTab = document.getElementById('signup-tab');
+        const loginTab = document.getElementById('login-tab');
+        const signupContent = document.getElementById('signup-content');
+        const loginContent = document.getElementById('login-content');
+        const loginLink = document.getElementById('login-link');
+        const signupLink = document.getElementById('signup-link');
+
+        signupTab.addEventListener('click', (event) => {
+            event.preventDefault();
+            signupContent.style.display = 'block';
+            loginContent.style.display = 'none';
+        });
+
+        loginTab.addEventListener('click', (event) => {
+            event.preventDefault();
+            signupContent.style.display = 'none';
+            loginContent.style.display = 'block';
+        });
+
+        signupLink.addEventListener('click', (event) => {
+            event.preventDefault();
+            signupContent.style.display = 'block';
+            loginContent.style.display = 'none';
+        });
+
+        loginLink.addEventListener('click', (event) => {
+            event.preventDefault();
+            signupContent.style.display = 'none';
+            loginContent.style.display = 'block';
+        });
+
+        const signupForm = document.getElementById('signup-form');
+
+        signupForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            const createPassword = document.getElementById('create-password').value;
+            const reenterPassword = document.getElementById('reenter-password').value;
+            const passwordError = document.getElementById('password-error');
+
+            if (createPassword !== reenterPassword) {
+                passwordError.style.display = 'block';
+            } else {
+                // Passwords match, proceed with successful signup functionality
+                // Assuming successful signup, redirect to dronescreen.html
+                window.location.href = '../DroneScreen/drone_screen.html'; // Redirect after successful signup
+            }
+        });
+
+        const loginForm = document.getElementById('login-form');
+
+        loginForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            const enteredUsername = document.getElementById('login-username').value;
+            const enteredPassword = document.getElementById('login-password').value;
+            const usernameError = document.getElementById('username-error-login');
+            const passwordError = document.getElementById('password-error-login');
+
+            // Simulated login validation, replace with actual authentication logic
+            const correctUsername = 'example'; // Replace with correct username
+            const correctPassword = 'password'; // Replace with correct password
+
+            if (enteredUsername !== correctUsername) {
+                usernameError.style.display = 'block';
+                passwordError.style.display = 'none';
+            } else if (enteredPassword !== correctPassword) {
+                usernameError.style.display = 'none';
+                passwordError.style.display = 'block';
+            } else {
+                usernameError.style.display = 'none';
+                passwordError.style.display = 'none';
+                window.location.href = '../DroneScreen/drone_screen.html'; // Redirect after successful login
+            }
+
+        });
+
+        const themeToggle = document.getElementById('themeToggle');
+        themeToggle.addEventListener('change', () => {
+            document.body.classList.toggle('dark-theme');
+        });
+
+    </script>
+</body>
+
+</html>

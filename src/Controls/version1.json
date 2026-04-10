@@ -1,0 +1,45 @@
+{
+  "_id": "1000000001",
+  "user": {
+    "username": "admin",
+    "password": "test"
+  },
+  "moveSettings": {
+    "forward": 87,
+    "backward": 83,
+    "left": 65,
+    "right": 68,
+    "ascend": 38,
+    "descend": 40,
+    "turn-left": 37,
+    "turn-right": 39
+  },
+  "droneSettings": {
+    "left-front": "127",
+    "right-front": "127",
+    "left-back": "127",
+    "right-back": "127"
+  },
+  "frontSettings": {
+    "color": "light-blue",
+    "accents": "white"
+  },
+  "ledSettings": {
+    "led1": "white",
+    "led2": "white",
+    "led3": "white",
+    "led4": "white",
+    "led5": "white",
+    "led6": "white",
+    "led7": "white",
+    "led8": "white",
+    "led9": "white",
+    "led10": "white"
+  },
+  "recordSettings": {
+    "record-key": "r"
+  },
+  "simSettings": {
+    "power-button": "p"
+  }
+}

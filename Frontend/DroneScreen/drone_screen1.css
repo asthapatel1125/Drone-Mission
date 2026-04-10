@@ -1,0 +1,177 @@
+.main-menu {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 2rem;
+}
+
+.main-menu li {
+  display: inline-block;
+}
+
+.header-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.item-list li:not(:last-child) {
+  margin-right: 1rem;
+}
+
+.drone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 2rem;
+  gap: 4rem;
+}
+
+.drone-control {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 80px;
+}
+
+.drone-control button {
+  width: 65px;
+  height: 65px;
+  border-radius: 100%;
+  background-color: var(--secondary);
+  color: var(--text-color);
+  cursor: pointer;
+}
+
+.drone-control button:hover {
+  background-color: var(--accent-1);
+  color: var(--primary);
+  cursor: pointer;
+}
+
+.popup {
+  display: none;
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: var(--accent-2);
+  padding: 0px 10px;
+  z-index: 1;
+}
+
+.drone-screen {
+  width: 800px;
+  height: 600px;
+  max-height: 600px;
+  padding: 1em;
+  border: 1rem solid var(--primary);
+  background-color: var(--text-color);
+  overflow: hidden;
+}
+
+.drone-screen img {
+  object-fit: cover;
+}
+
+.drone-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 50px;
+}
+
+.drone-col button {
+  width: 325px;
+  height: 48px;
+  border-radius: 20px;
+  background-color: var(--secondary);
+  color: var(--text-color);
+  cursor: pointer;
+}
+
+.drone-col button:hover {
+  /* background-color: var(--primary); */
+  opacity: 0.5;
+}
+
+.drone-row {
+  display: flex;
+  flex-direction: row;
+  gap: 25px;
+}
+
+.drone-row button {
+  width: 150px;
+  height: 75px;
+  border-radius: 10px;
+  background-color: var(--accent-1);
+  color: var(--text-color);
+  cursor: pointer;
+}
+
+.drone-video {
+  margin-top: -25px;
+}
+
+.drone-video a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.drone-packet {
+  display: flex;
+  flex-direction: row;
+  gap: 25px;
+}
+
+.drone-packet button {
+  width: 325px;
+  height: 48px;
+  border-radius: 0px;
+  background-color: transparent;
+  color: var(--secondary);
+  border: solid;
+  border-color: var(--secondary);
+  cursor: pointer;
+}
+
+.drone-packet button:hover {
+  background-color: var(--secondary);
+  color: var(--text-color);
+  opacity: 1;
+}
+
+.divider {
+  width: 50%;
+  background-color: var(--background);
+  height: 1px;
+  margin: 0 10px;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+  color: var(--accent-1);
+}
+
+a:hover {
+  color: var(--accent-2);
+}
+
+button {
+  background-color: var(--accent-1);
+  color: var(--accent-2);
+}
+
+#notificationCount {
+  background-color: var(--warning);
+  color: var(--text-color);
+  border-radius: 50%;
+  padding: 5px 10px;
+}

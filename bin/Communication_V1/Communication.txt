@@ -1,0 +1,53 @@
+A guide to run the Communication component:
+
+Run the .java files in this order:
+1. CommunicationHandler.java
+2. BackendClient.java
+3. FrontendClient.java
+4. FirmwareClient.java
+5. SimulationClient.java
+6. SimulationClientCall.java
+
+
+Then, Enter a message through the CommunicationHandler.java console and \
+write packets (in lowercase) according to the following format
+
+    <Component identifier>_<Data1>_<Data2>_..._<DataN>
+        i. Component identifiers: backend, frontend, firmware, simulation 
+        ii. Data1...DataN: any data related to the packets
+
+This is how the current classes are being tested:
+
+    1.BackendClient.java
+        - packet: backend_Drone_20_100_200_10_5_1
+        - the packet recognizes that it needs to be sent to the Drone controls component
+          and will output a message saying "packet sent to the Drone class" to indicate 
+          that the packet was received by the appropriate switch case in the client class.
+            - it is yet to have a proper connection with the Controls component, it is
+              in progress.
+        - any other packet being sent will be received by the class and printed to the client's 
+          console
+
+    2. FrontendClient.java
+        - packet: frontend_test1
+        - this packet will be received by the FrontendClient and it will output the received
+          message to its console.
+        - in return to receiving this packet, it will send a packet to the BackendClient class
+          with the packet "backend_packet_received_from_frontend" as a means to test the Communication
+          between frontend and backend.
+            - this can be replicated for all the other componenets to send and receive packets
+              to enable Communication with all the client classes.
+
+    3. SimulationClient.java
+        - packet: simulation_test1
+        - this packet is received by the SimulationClient class, it will output this message
+          to the console.
+        - upon receiving this message, it will forward this message to another port where
+          another client is listening for any messages.
+        - this second connection is implemented using the UDP method. 
+            - it does not require a connection to be established with its server
+    
+    4.FirmwareClient.java
+        - packet: firmware_test1
+        - outputs this message to its console
+        - the UDP protocol is implemented for the firmware as well to forward its data to its own client.

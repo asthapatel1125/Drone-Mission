@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="drone_screen.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+
+<body>
+    <nav class="main-menu">
+        <div class="header-icon">
+            <img src="../images/Drone.png" alt="Drone Icon" width="35" height="35" style="margin-right: 20px;">
+            <h3>Drone Mission</h3>
+        </div>
+        <!-- <ul class="item-list">
+            <li>
+                <a href="#" class="material-icons" onclick="showNotifications()">notifications</a>
+                <span id="notificationCount">0</span>
+            </li>
+            <li> <a href="../SettingScreen/setting_screen.html" class="material-icons">settings</i> </li>
+            <li> <a href="../UserProfile/userprofile.html" class="material-icons">account_circle</a> </li>
+            <li> <a href="../UserAccount/user.html" class="material-icons">logout</a> </li>
+        </ul> -->
+        <ul class="item-list">
+            <li>
+                <a href="#" class="fa-solid fa-bell" onclick="showNotifications()"></a>
+                <span id="notificationCount">0</span>
+            </li>
+            <li> <a href="../SettingScreen/setting_screen.html" class="fa-solid fa-gear"></a> </li>
+            <li> <a href="../UserProfile/userprofile.html" class="fa-solid fa-user"></a> </li>
+            <li> <a href="../UserAccount/user.html" class="fa-solid fa-right-from-bracket"></a></li>
+        </ul>
+    </nav>
+
+    <section class="drone">
+        <div class="drone-control">
+            <!-- <button id="keyboard-button" class="control-button" onclick="showMessage('Keyboard is in use')"> <i
+                    class="material-icons">keyboard</i></button>
+            <button id="controller-button" class="control-button" onclick="showMessage('Controller is in use')"> <i
+                    class="material-icons">sports_esports</i></button>
+            <button id="phone-button" class="control-button" onclick="showMessage('Phone is in use')"> <i
+                    class="material-icons">smartphone</i></button> -->
+            <button id="keyboard-button" class="control-button" onclick="showMessage('Keyboard is in use')"><i
+                    class="fa-solid fa-keyboard"></i></button>
+            <button id="controller-button" class="control-button" onclick="showMessage('Controller is in use')"><i
+                    class="fa-solid fa-gamepad"></i></button>
+            <button id="phone-button" class="control-button" onclick="showMessage('Phone is in use')"><i
+                    class="fa-solid fa-mobile-screen-button"></i></button>
+        </div>
+
+        <div class="drone-col">
+            <!-- <img src="../images/placeholder.png" alt="Placeholder Image"> -->
+            <!-- <iframe class="drone-screen" src="../../Simulation/" width="800" height="600" frameborder="0"></iframe> -->
+            <div class="drone-screen">
+                <ul id="data-list"></ul>
+            </div>
+
+            <div class="drone-packet">
+                <button id="start-button"> Start Receiving Data Packets </button>
+                <button id="stop-button"> Stop Receiving Data Packets </button>
+            </div>
+        </div>
+
+        <div class="drone-col">
+            <button id="takeoff-button" class="action-button" onclick="showMessage('Drone is taking off')"> Takeoff
+            </button>
+            <button id="land-button" class="action-button" onclick="showMessage('Preparing for landing')"> Land
+            </button>
+            <button id="emergency-button" class="action-button" style="background-color: var(--warning);"
+                onclick="showMessage('Emergency stop initiated')"> Emergency Stop </button>
+
+            <div class="divider"></div>
+
+            <!-- Record button -->
+            <div class="drone-row">
+                <button id="startRecord"> Start Recording </button>
+                <button id="stopRecord" disabled> Stop Recording </button>
+            </div>
+
+            <div class="drone-video">
+                <a id="downloadRecorded" style="display: none;" ownload="recording.webm">
+                    <i class="material-icons">download</i>
+                    Download Recording </a>
+                <div id="recordingOverlay"></div>
+                <video id="recordedVideo" controls style="display: none;"></video>
+            </div>
+        </div>
+    </section>
+
+    <div id="popup" class="popup">
+        <p id="messageText"></p>
+    </div>
+</body>
+
+<script>
+    const keyboardButton = document.getElementById("keyboard-button");
+    const controllerButton = document.getElementById("controller-button");
+    const phoneButton = document.getElementById("phone-button");
+
+    const takeoffButton = document.getElementById("takeoff-button");
+    const landButton = document.getElementById("land-button");
+    const emergencyButton = document.getElementById("emergency-button");
+
+    // Popup Message
+    var popupTimer;
+    var notificationCount = 0;
+    var notifications = [];
+
+    function showMessage(message) {
+        var popup = document.getElementById("popup");
+        var messageText = document.getElementById("messageText");
+
+        messageText.innerHTML = message;
+        popup.style.display = "block";
+
+        // Store the message in the array
+        notifications.push(message);
+        notificationCount++;
+
+        // Update the notification count in the bell
+        document.getElementById("notificationCount").textContent = notificationCount;
+
+        popupTimer = setTimeout(closeMessage, 3000);
+    }
+
+    function closeMessage() {
+        var popup = document.getElementById("popup");
+        popup.style.display = "none";
+
+        clearTimeout(popupTimer);
+    }
+
+    // Recording variables
+    let mediaStream;
+    let mediaRecorder;
+    let recordedChunks = [];
+
+    const startRecordButton = document.getElementById("startRecord");
+    const stopRecordButton = document.getElementById("stopRecord");
+    const recordedVideo = document.getElementById("recordedVideo");
+    const recordingOverlay = document.getElementById("recordingOverlay");
+    const downloadRecordedButton = document.getElementById("downloadRecorded");
+
+    startRecordButton.addEventListener("click", async () => {
+        try {
+            mediaStream = await navigator.mediaDevices.getDisplayMedia({ video: true });
+
+            mediaRecorder = new MediaRecorder(mediaStream);
+
+            mediaRecorder.ondataavailable = (event) => {
+                if (event.data.size > 0) {
+                    recordedChunks.push(event.data);
+                }
+            };
+
+            mediaRecorder.onstop = () => {
+                const recordedBlob = new Blob(recordedChunks, { type: "video/webm" });
+                recordedVideo.src = URL.createObjectURL(recordedBlob);
+                downloadRecordedButton.href = recordedVideo.src;
+                downloadRecordedButton.setAttribute('download', 'recording.webm');
+                downloadRecordedButton.style.display = "flex";
+                recordedChunks = []; // Clear the recorded chunks
+            };
+
+            mediaRecorder.start();
+
+            startRecordButton.disabled = true;
+            stopRecordButton.disabled = false;
+            recordingOverlay.style.display = "block";
+        } catch (err) {
+            console.error("Error accessing screen recording:", err);
+        }
+    });
+
+    stopRecordButton.addEventListener("click", () => {
+        if (mediaRecorder.state === "recording") {
+            mediaRecorder.stop();
+            mediaStream.getTracks().forEach((track) => track.stop());
+        }
+        startRecordButton.disabled = false;
+        stopRecordButton.disabled = true;
+        recordingOverlay.style.display = "none";
+    });
+
+    // Data Packet variables
+    const dataList = document.getElementById("data-list");
+    const startButton = document.getElementById("start-button");
+    const stopButton = document.getElementById("stop-button");
+    let intervalId;
+
+    // Function to add a new data packet to the list
+    function addDataPacket(packet) {
+        const listItem = document.createElement("li");
+        listItem.textContent = packet;
+        dataList.appendChild(listItem);
+
+        if (dataList.children.length > 34) {
+            dataList.removeChild(dataList.firstChild);
+        }
+    }
+
+    // Simulate receiving data packets (replace with actual data)
+    function simulateDataReception() {
+        const droneData = ["Packet 1: KEY: L for Landing", "Packet 2: KEY: T for Takeoff", "Packet 3: KEY: R for Emergency Landing"];
+
+        intervalId = setInterval(() => {
+            const randomPacketIndex = Math.floor(Math.random() * droneData.length);
+            const randomPacket = droneData[randomPacketIndex];
+            addDataPacket(randomPacket);
+        }, 3000);
+    }
+
+    // Start data reception when the "Start" button is clicked
+    startButton.addEventListener("click", () => {
+        simulateDataReception();
+        startButton.disabled = true;
+        stopButton.disabled = false;
+    });
+
+    // Event listeners for buttons
+
+    keyboardButton.addEventListener("click", () => {
+        if (startButton.disabled) { addDataPacket("Button Action: Set to keyboard"); }
+    });
+
+    controllerButton.addEventListener("click", () => {
+        if (startButton.disabled) { addDataPacket("Button Action: Set to controller"); }
+    });
+
+    phoneButton.addEventListener("click", () => {
+        if (startButton.disabled) { addDataPacket("Button Action: Set to phone"); }
+    });
+
+    takeoffButton.addEventListener("click", () => {
+        if (startButton.disabled) { addDataPacket("Button Action: Takeoff"); }
+    });
+
+    landButton.addEventListener("click", () => {
+        if (startButton.disabled) { addDataPacket("Button Action: Landing"); }
+    });
+
+    emergencyButton.addEventListener("click", () => {
+        if (startButton.disabled) { addDataPacket("Button Action: Emergency landing"); }
+    });
+
+    // Stop data reception when the "Stop" button is clicked
+    stopButton.addEventListener("click", () => {
+        clearInterval(intervalId);
+        startButton.disabled = false;
+        stopButton.disabled = true;
+    });
+
+    // Initially, disable the "Stop" button
+    stopButton.disabled = true;
+</script>
+
+</html>

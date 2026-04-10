@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setting Screen</title>
+    <link rel="stylesheet" href="setting_screen.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- website: font awesome-->
+
+</head>
+
+<body>
+    <nav class="navbar-container">
+        <a class="nav-button" href="../mainscreen/mainscreen.html"><i
+                class="fa-solid fa-house"></i></a><!--might need to remove target=blank-->
+        <a class="nav-button" href="../DroneScreen/drone_screen.html"><img src="../images/Drone.png" alt="Drone"
+                width="35px" height="35px"></a><!--might need to remove target=blank-->
+    </nav>
+
+    <div class="card">
+        <h1 class="settings-title"><i class="fa-solid fa-gear"></i>Settings</h1>
+        <div class="tabs-container">
+            <span class="connection-tab active-tab"><i class="fa-solid fa-tower-broadcast"></i>Connection</span>
+            <span class="controls-tab"><i class="fa-solid fa-gamepad"></i>Controls</span>
+            <span class="about-tab"><i class="fa-solid fa-circle-info"></i>About/Help</span>
+        </div>
+        <div class="content" id="connection-content">
+            <h2>Connection Settings</h2>
+            <div class="connection-content-flex">
+                <div class="control-devices">
+                    <h3>Control Devices:</h3>
+                    <ul>
+                        <li><label for="mouse">Mouse:</label><i id="mouse-icon" class="fa-solid fa-computer-mouse"></i>
+                        </li>
+                        <li><label for="keyboard">Keyboard:</label><i id="keyboard-icon"
+                                class="fa-solid fa-keyboard"></i></li>
+                        <button type="check-status-button" onclick="checkDeviceStatus()">Check Status</button>
+                    </ul>
+                </div>
+                <div class="ip-address">
+                    <h3>Input Drone's IP Address</h3>
+                    <div class="input-ip-address">
+                        <input class="first-three" inputmode="numeric" maxlength="3" placeholder="192"> .
+                        <input class="second-three" inputmode="numeric" maxlength="3" placeholder="168"> .
+                        <input class="first-two" inputmode="numeric" maxlength="2" placeholder="1"> .
+                        <input class="second-two" inputmode="numeric" maxlength="2" placeholder="1">
+                        <button type="button" onclick="displayIPAddress()">Submit</button>
+                    </div>
+                    <div class="showIPAddress">
+                        <p id="display-ip">....</p>
+                    </div>
+                </div>
+                <script>
+                    function displayIPAddress() {
+                        const firstThree = document.querySelector('.first-three').value;
+                        const secondThree = document.querySelector('.second-three').value;
+                        const firstTwo = document.querySelector('.first-two').value;
+                        const secondTwo = document.querySelector('.second-two').value;
+                        const ipAddress = `${firstThree}.${secondThree}.${firstTwo}.${secondTwo}`;
+                        document.getElementById('display-ip').innerHTML = 'Your IP Address: ' + ipAddress;
+                    }
+                    // Simulated function to check if the mouse is connected
+                    function isMouseConnected() {
+                        // Implement the actual logic or API call to check mouse connectivity
+                        // Currently returns true for demonstration purposes
+                        return true;
+                    }
+
+                    // Simulated function to check if the keyboard is connected
+                    function isKeyboardConnected() {
+                        // Implement the actual logic or API call to check keyboard connectivity
+                        // Currently returns true for demonstration purposes
+                        return true;
+                    }
+
+                    function checkDeviceStatus() {
+                        // Check the connection status of the mouse
+                        const mouseConnected = isMouseConnected();
+                        const mouseIcon = document.getElementById('mouse-icon');
+                        mouseIcon.style.color = mouseConnected ? 'green' : 'red';
+
+                        // Check the connection status of the keyboard
+                        const keyboardConnected = isKeyboardConnected();
+                        const keyboardIcon = document.getElementById('keyboard-icon');
+                        keyboardIcon.style.color = keyboardConnected ? 'green' : 'red';
+                    }
+                </script>
+            </div>
+        </div>
+
+        <div class="content" id="controls-content" style="display: none;">
+            <h2>Control Settings</h2>
+            <div class="controls-content-flex">
+                <div class="control-buttons">
+                    <div class="control-button">
+                        <label for="forward">Forward:</label>
+                        <input type="text" autocomplete="off" class="key-input" id="forward" value="">
+                    </div>
+                    <div class="control-button">
+                        <label for="backward">Backward:</label>
+                        <input type="text" autocomplete="off" class="key-input" id="backward" value="">
+                    </div>
+                    <div class="control-button">
+                        <label for="left">Tilt-Right:</label>
+                        <input type="text" autocomplete="off" class="key-input" id="left" value="">
+                    </div>
+                    <div class="control-button">
+                        <label for="right">Tilt-Left:</label>
+                        <input type="text" autocomplete="off" class="key-input" id="right" value="">
+                    </div>
+                    <div class="control-button">
+                        <label for="ascend">Up:</label>
+                        <input type="text" autocomplete="off" class="key-input" id="ascend" value="">
+                    </div>
+                    <div class="control-button">
+                        <label for="descend">Down:</label>
+                        <input type="text" autocomplete="off" class="key-input" id="descend" value="">
+                    </div>
+                    <div class="control-button">
+                        <label for="turn-left">Turn-Left:</label>
+                        <input type="text" autocomplete="off" class="key-input" id="turn-left" value="">
+                    </div>
+                    <div class="control-button">
+                        <label for="turn-right">Turn-Right:</label>
+                        <input type="text" autocomplete="off" class="key-input" id="turn-right" value="">
+                    </div>
+
+                    <script>
+                        // Fetch the JSON file
+                        fetch('../sample.json')
+                            .then(response => response.json())
+                            .then(data => {
+                                // Define an array of control button IDs
+                                const controlButtonIds = ['forward', 'backward', 'left', 'right', 'ascend', 'descend', 'turn-left', 'turn-right'];
+
+                                // Iterate over the control button IDs
+                                controlButtonIds.forEach(id => {
+                                    // Set the input value based on the JSON data
+                                    document.getElementById(id).value = String.fromCharCode(data.moveSettings[id]);
+                                });
+                            })
+                            .catch(error => console.error('Error fetching JSON:', error));
+                    </script>
+
+                    <button id="submit-button">Save Changes</button>
+                    <p id="error-message" style="color:red; position: relative; top: 10px;"></p>
+                    <p id="success-message" style="color:green;"></p>
+                    <script>
+                        document.addEventListener('DOMContentLoaded', (event) => {
+                            document.getElementById('submit-button').addEventListener('click', function (e) {
+                                e.preventDefault(); // Prevent form submission
+                                var inputs = document.querySelectorAll('.key-input');
+                                var inputValues = new Set();
+                                var isDuplicate = false;
+                                var isEmpty = false;
+
+                                inputs.forEach(function (input) {
+                                    if (input.value === '') {
+                                        isEmpty = true;
+                                        return; // Stop processing if an empty value is found
+                                    }
+
+                                    if (inputValues.has(input.value)) {
+                                        isDuplicate = true;
+                                    } else {
+                                        inputValues.add(input.value);
+                                    }
+                                });
+
+                                if (isEmpty) {
+                                    document.getElementById('error-message').textContent = 'Error: Empty values found!';
+                                    document.getElementById('success-message').textContent = '';
+                                } else if (isDuplicate) {
+                                    document.getElementById('error-message').textContent = 'Error: Duplicate values found!';
+                                    document.getElementById('success-message').textContent = '';
+                                } else {
+                                    document.getElementById('error-message').textContent = '';
+                                    document.getElementById('success-message').textContent = 'Success: Settings saved!';
+
+                                    // Create JSON object
+                                    var jsonData = {};
+                                    inputs.forEach(function (input) {
+                                        var value = input.value;
+
+                                        if (/^[a-z]$/.test(value)) {
+                                            // If it's a lowercase letter, use ASCII value
+                                            value = value.charCodeAt(0);
+                                        }
+
+                                        jsonData[input.id] = value;
+                                    });
+
+                                    // Convert JSON object to string
+                                    var jsonString = JSON.stringify(jsonData, null, 2);
+
+                                    // Trigger download of JSON file
+                                    var blob = new Blob([jsonString], { type: 'application/json' });
+                                    var link = document.createElement('a');
+                                    link.href = window.URL.createObjectURL(blob);
+                                    link.download = 'game_settings.json';
+                                    document.body.appendChild(link);
+                                    link.click();
+                                    document.body.removeChild(link);
+                                }
+                            });
+                        });
+
+                        document.addEventListener('DOMContentLoaded', function () {
+                            var inputs = document.querySelectorAll('.key-input');
+                            inputs.forEach(function (input) {
+                                input.addEventListener('keydown', function (event) {
+                                    this.value = event.key;
+                                    event.preventDefault();
+                                });
+
+                                // Load settings if they exist
+                                var savedValue = localStorage.getItem(input.id);
+                                if (savedValue) {
+                                    input.value = savedValue;
+                                }
+                            });
+
+                            document.getElementById('saveSettings').addEventListener('click', function () {
+                                inputs.forEach(function (input) {
+                                    localStorage.setItem(input.id, input.value);
+                                });
+                                // alert('Settings saved!');
+                                document.getElementById('success-message').textContent = 'Success: Settings saved!';
+                            });
+                        });
+                    </script>
+
+                    <script>
+                        document.addEventListener('DOMContentLoaded', (event) => {
+                            // Convert input to lowercase
+                            document.querySelectorAll('.key-input').forEach(input => {
+                                input.addEventListener('input', () => {
+                                    input.value = input.value.toLowerCase();
+                                });
+                            });
+                        });
+                    </script>
+                </div>
+                <div class="more-controls">
+                    <div class="power-ctrl-container">
+                        <input type="checkbox" id="showPowerControl">
+                        <!-- <input type="checkbox" id="showPowerControl" checked="true"> -->
+                        <p>Power On/Off:</p><i id="powerIcon" class="fa-solid fa-power-off"></i>
+                        <select class="key-select" id="power-ctrl" data-default="Control+Shift+p" value="ctrl+shift+p"
+                            style="display: none;">
+                            <option value="ctrl+shift+p">ctrl + shift + p</option>
+                            <option value="ctrl+shift+x">ctrl + shift + x</option>
+                            <option value="shift+p">shift + p</option>
+                        </select>
+                    </div>
+
+                    <div class="screenrecord-container">
+                        <input type="checkbox" id="showScreenRecord">
+                        <p>Screen Record:</p>
+                        <i id="recordIcon" class="fa-solid fa-record-vinyl"></i>
+                        <select class="key-select" id="screen-record" data-default="Control+Shift+s"
+                            value="ctrl+shift+s" style="display: none;">
+                            <option value="ctrl+shift+s">ctrl + shift + s</option>
+                            <option value="shift+s">shift + s</option>
+                        </select>
+                    </div>
+                    <script>
+                        /*Screen Record Check Button*/
+                        const showScreenRecordCheckbox = document.getElementById("showScreenRecord");
+                        const screenRecordSelect = document.getElementById("screen-record");
+                        const screenRecordIcon = document.getElementById("recordIcon");
+
+                        const showPowerControlCheckbox = document.getElementById("showPowerControl");
+                        const powerCtrlSelect = document.getElementById("power-ctrl");
+                        const powerIcon = document.getElementById("powerIcon");
+
+
+                        showScreenRecordCheckbox.addEventListener("change", function () {
+                            screenRecordSelect.style.display = this.checked ? "block" : "none";
+                            screenRecordIcon.style.backgroundColor = this.checked ? "var(--warning-color)" : "transparent";
+                            screenRecordIcon.style.color = this.checked ? "var(--neutral-color)" : "var(--warning-color)";
+                        });
+
+                        showPowerControlCheckbox.addEventListener("change", function () {
+                            powerCtrlSelect.style.display = this.checked ? "block" : "none";
+                            powerIcon.style.backgroundColor = this.checked ? "var(--accent-two)" : "transparent";
+                            powerIcon.style.color = this.checked ? "var(--neutral-color)" : "var(--accent-two)";
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+        <div class="content" id="about-content" style="display: none;">
+            <h2>About and Help Settings</h2>
+            <p>Welcome to the About and Help section for your drone! We're here to provide you with insights about your
+                drone's capabilities and how to make the most of it:</p>
+
+            <h5>1. What are the primary activities you enjoy doing with your drone?</h3>
+                <p>Your drone can be a versatile tool. Whether it's capturing breathtaking aerial photos or exploring
+                    new horizons, we'd love to hear how you use it.</p>
+
+                <h5>2. What inspires your drone adventures? Share your favorite drone stories with us!</h3>
+                    <p>We believe that drones can lead to incredible experiences. Do you have a memorable moment or an
+                        exciting adventure with your drone that you'd like to share?</p>
+
+                    <h5>3. How can we help you better understand your drone's capabilities and features?</h3>
+                        <p>We're here to assist. If you have any questions or if there's anything specific about your
+                            drone that you'd like to know more about, feel free to ask. We're here to help!</p>
+
+                        <h5>4. What do you envision for the future of your drone exploration? Any exciting plans ahead?
+                            </h3>
+                            <p>Your drone is a gateway to endless possibilities. Whether it's new places to explore or
+                                creative projects to undertake, we're interested in hearing about your drone dreams and
+                                aspirations.</p>
+
+                            <h5>5. What advice or tips can you share with other drone enthusiasts in our community?</h3>
+                                <p>Your experience and insights matter. If you have any tips, tricks, or advice to share
+                                    with fellow drone enthusiasts, we'd love to hear them. Your knowledge can help
+                                    others make the most of their drones!</p>
+        </div>
+        <script>
+            const connectionTab = document.querySelector('.connection-tab');
+            const controlsTab = document.querySelector('.controls-tab');
+            const aboutTab = document.querySelector('.about-tab');
+            const connectionContent = document.getElementById('connection-content');
+            const controlsContent = document.getElementById('controls-content');
+            const aboutContent = document.getElementById('about-content');
+            const tabElements = document.querySelectorAll('.tabs-container span');
+            const contentElements = [connectionContent, controlsContent, aboutContent];
+            const tabs = [connectionTab, controlsTab, aboutTab];
+
+            // Function to switch to a specific tab
+            function switchToTab(index) {
+                // Hide all content by default
+                contentElements.forEach(content => content.style.display = 'none');
+
+                // Remove active-tab class from all tabs
+                tabs.forEach(tab => tab.classList.remove('active-tab'));
+
+                // Display the content of the clicked tab
+                contentElements[index].style.display = 'block';
+
+                // Add active-tab class to the clicked tab
+                tabs[index].classList.add('active-tab');
+            }
+
+            tabs.forEach((tab, index) => {
+                tab.addEventListener('click', () => {
+                    switchToTab(index);
+                });
+            });
+
+            // Initial state (show the connection tab by default)
+            switchToTab(0);
+
+        </script>
+    </div>
+</body>
+
+</html>

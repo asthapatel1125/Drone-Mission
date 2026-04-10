@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="data_rec.css">
+    <title>Drone Data Recorder</title>
+</head>
+<body>
+    <h1>Drone Data Recorder</h1>
+    
+    <button id="start-button">Start Receiving Data</button>
+    <button id="stop-button">Stop Receiving Data</button>
+
+    <div id="data-display">
+        <h2>Received Data Packets:</h2>
+        <ul id="data-list"></ul>
+    </div>
+
+
+    <script>
+        const dataList = document.getElementById("data-list");
+        const startButton = document.getElementById("start-button");
+        const stopButton = document.getElementById("stop-button");
+        let intervalId;
+
+        // Function to add a new data packet to the list
+        function addDataPacket(packet) {
+            const listItem = document.createElement("li");
+            listItem.textContent = packet;
+            dataList.appendChild(listItem);
+        }
+
+        // Simulate receiving data packets (replace with actual data)
+        function simulateDataReception() {
+            const droneData = ["Packet 1: KEY: L for Landing", "Packet 2: KEY: T for Takeoff", "Packet 3: KEY: R for Emergency Landing"];
+
+            intervalId = setInterval(() => {
+                const randomPacketIndex = Math.floor(Math.random() * droneData.length);
+                const randomPacket = droneData[randomPacketIndex];
+                addDataPacket(randomPacket);
+            }, 3000);
+        }
+
+        // Start data reception when the "Start" button is clicked
+        startButton.addEventListener("click", () => {
+            simulateDataReception();
+            startButton.disabled = true;
+            stopButton.disabled = false;
+        });
+
+        // Stop data reception when the "Stop" button is clicked
+        stopButton.addEventListener("click", () => {
+            clearInterval(intervalId);
+            startButton.disabled = false;
+            stopButton.disabled = true;
+        });
+
+        // Initially, disable the "Stop" button
+        stopButton.disabled = true;
+    </script>
+</body>
+</html>
